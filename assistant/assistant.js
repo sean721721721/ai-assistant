@@ -30,7 +30,8 @@ class Assistant {
   }) {
     if (type !== EVENT_TYPE_MESSAGE) return null;
     if (message.type !== MESSAGE_TYPE_TEXT) return null;
-    if (!message.text.includes('小白')) return null;
+    const regex = new RegExp('^小白');
+    if (!regex.test(message.text)) return null;
     const prompt = this.storage.getPrompt(source.userId);
     prompt.write(`${PARTICIPANT_HUMAN}: ${message.text.replace('小白', '')}？`);
     const { text } = await this.chat({ prompt: prompt.toString() });
