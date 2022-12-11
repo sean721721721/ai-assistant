@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/webhook', async (req, res) => {
- if (!res.body.events || !res.body.events.message || !res.body.events.message.text.includes('AI')) {
+ if (!res.body.events || !res.body.events.message) {
   res.sendStatus(200);
 } else {
   await assistant.handleEvents(req.body.events);
