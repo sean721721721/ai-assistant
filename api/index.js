@@ -16,18 +16,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/webhook', async (req, res) => {
-  console.log(req.body.events)
-  // console.log(!res.body.events || !res.body.events.some(({message}) => message.text && message.text.includes('小白')))
-//  if (!res.body.events || !res.body.events.some(({message}) => message.text && message.text.includes('小白'))) {
-//    res.sendStatus(200);
-// } else {
-  if (res.body.events && res.body.events.filter(({message}) => message.text && typeof message.text === 'string' && message.text.includes('小白')).length > 0) {
     await assistant.handleEvents(req.body.events);
     assistant.debug();
     res.sendStatus(200);
-  }
-  res.sendStatus(200);
-// }
 });
 
 if (APP_ENV === 'local') {
