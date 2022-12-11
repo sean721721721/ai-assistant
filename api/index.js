@@ -16,13 +16,13 @@ app.get('/', (req, res) => {
 });
 
 app.post('/webhook', async (req, res) => {
- if (!res.body.events || !res.body.events.message) {
-  res.sendStatus(200);
-} else {
+//  if (!res.body.events || !res.body.events.message) {
+//   res.sendStatus(200);
+// } else {
   await assistant.handleEvents(req.body.events);
   assistant.debug();
   res.sendStatus(200);
-}
+// }
 });
 
 if (APP_ENV === 'local') {
