@@ -32,7 +32,7 @@ class Assistant {
     if (message.type !== MESSAGE_TYPE_TEXT) return null;
     if (!message.text.includes('小白')) return null;
     const prompt = this.storage.getPrompt(source.userId);
-    prompt.write(`${PARTICIPANT_HUMAN}: ${message.text}？`);
+    prompt.write(`${PARTICIPANT_HUMAN}: ${message.text.replace('小白')}？`);
     const { text } = await this.chat({ prompt: prompt.toString() });
     prompt.write(`${PARTICIPANT_AI}: ${text}`);
     this.storage.setPrompt(source.userId, prompt);
