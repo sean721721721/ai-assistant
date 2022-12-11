@@ -21,8 +21,11 @@ app.post('/webhook', async (req, res) => {
 //  if (!res.body.events || !res.body.events.some(({message}) => message.text && message.text.includes('小白'))) {
 //    res.sendStatus(200);
 // } else {
-  await assistant.handleEvents(req.body.events);
-  assistant.debug();
+  if (res.body.events && res.body.events.filter(({message}) => message.text && typeof message.text === 'string' && message.text.includes('小白')).length > 0) {
+    await assistant.handleEvents(req.body.events);
+    assistant.debug();
+    res.sendStatus(200);
+  }
   res.sendStatus(200);
 // }
 });
