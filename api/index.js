@@ -16,6 +16,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/webhook', async (req, res) => {
+  console.log(req.body.events)
+  console.log(!res.body.events || !res.body.events.some(({message}) => message.text && message.text.includes('小白')))
 //  if (!res.body.events || !res.body.events.some(({message}) => message.text && message.text.includes('小白'))) {
 //    res.sendStatus(200);
 // } else {
