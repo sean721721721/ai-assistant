@@ -16,14 +16,13 @@ app.get('/', (req, res) => {
 });
 
 app.post('/webhook', async (req, res) => {
-//  if (!res.body.events || !res.body.events.message) {
-//   res.sendStatus(200);
-// } else {
-  console.log(req.body.events)
+ if (res.body.events && res.body.events.some(({message}) => message.text.includes('小白'))) {
   await assistant.handleEvents(req.body.events);
   assistant.debug();
   res.sendStatus(200);
-// }
+} else {
+  res.sendStatus(200);
+}
 });
 
 if (APP_ENV === 'local') {
