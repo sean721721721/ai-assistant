@@ -19,6 +19,7 @@ app.post('/webhook', async (req, res) => {
 //  if (!res.body.events || !res.body.events.message) {
 //   res.sendStatus(200);
 // } else {
+  console.log(req.body.events)
   await assistant.handleEvents(req.body.events);
   assistant.debug();
   res.sendStatus(200);
