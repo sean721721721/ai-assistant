@@ -2,6 +2,7 @@ import {
   APP_ENV,
   APP_DEBUG,
 } from '../config/index.js';
+import axios from 'axios';
 import {
   PARTICIPANT_AI,
   PARTICIPANT_HUMAN,
