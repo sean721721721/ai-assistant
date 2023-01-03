@@ -7,6 +7,7 @@ import {
   PARTICIPANT_HUMAN,
   FINISH_REASON_STOP,
   complete,
+  getData,
 } from '../services/openai.js';
 import {
   EVENT_TYPE_MESSAGE,
@@ -31,7 +32,12 @@ class Assistant {
     if (type !== EVENT_TYPE_MESSAGE) return null;
     if (message.type !== MESSAGE_TYPE_TEXT) return null;
     const regex = new RegExp('^小白');
-    if (!regex.test(message.text)) return null;
+    if (!regex.test(message.text)) {
+      const game = new RegExp('^fn');
+      if (!game.test(message.text)) return null
+      const { data } = await getData();
+      return APP_ENV === 'local' ? res : reply(res);
+    }
     const prompt = this.storage.getPrompt(source.userId);
     prompt.write(`${PARTICIPANT_HUMAN}: ${message.text.replace('小白', '')}？`);
     const { text } = await this.chat({ prompt: prompt.toString() });
