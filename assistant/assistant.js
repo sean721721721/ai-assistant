@@ -37,7 +37,13 @@ class Assistant {
       if (!game.test(message.text)) return null
       const params = message.text.split(',')
       let responseString = '';
-      if (params[1] === 'stats') responseString = await getStats(params[1])
+      if (params[1].includes('stats')) {
+        /** 只看哪個模式 */
+        const mode = ['solo', 'duo', 'trio', 'squad'];
+        let selectMode = '';
+        if (mode.includes(params[1].split('-')[1])) selectMode = params[1].split('-')[1];
+        responseString = await getStats(params[1], selectMode)
+      }
       const res = { replyToken, messages: [{ type: message.type, text: responseString}]};
       return APP_ENV === 'local' ? res : reply(res);
     }
