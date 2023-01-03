@@ -47,11 +47,23 @@ class Assistant {
           Authorization: FORTNITE_API_KEY,
         }
       })
-      const {account, battlePass} = response.data.data;
+      const {account, battlePass, stats:{ all: { overall }}} = response.data.data;
       const res = { replyToken, messages: [{ 
         type: message.type, 
-        text: `[Fortnite] Stats\n帳號： ${account.name}\nBattlePass: Lv${battlePass.level} ${battlePass.progress}%`
-      }] };
+        text: `[Fortnite] Stats
+帳號： ${account.name}
+BattlePass: Lv${battlePass.level} ${battlePass.progress}%
+勝利: ${overall.wins}
+top3: ${overall.top3}
+top5: ${overall.top5}
+top6: ${overall.top6}
+top10: ${overall.top10}
+top12: ${overall.top12}
+top25: ${overall.top25}
+殺敵數: ${overall.kills}
+平均殺敵數(分): ${overall.killsPerMin}
+平均殺敵數(場): ${overall.killsPerMatch}
+死亡數: ${overall.deaths}`}]};
       return APP_ENV === 'local' ? res : reply(res);
     }
     const prompt = this.storage.getPrompt(source.userId);
