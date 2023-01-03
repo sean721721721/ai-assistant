@@ -37,18 +37,23 @@ class Assistant {
     if (message.type !== MESSAGE_TYPE_TEXT) return null;
     const regex = new RegExp('^小白');
     if (!regex.test(message.text)) {
-      const game = new RegExp('^fn');
+      const game = new RegExp('^fortnite');
       if (!game.test(message.text)) return null
+      const params = a.split(' ')
       const response = await axios({
         method: 'get',
-        url: 'https://fortnite-api.com/v2/stats/br/v2?name=sean721721721',
+        url: `https://fortnite-api.com/v2/${params[2]}/br/v2?name=${params[1]}`,
         headers: {
           Authorization: FORTNITE_API_KEY,
         }
       })
       const {account, battlePass} = response.data.data;
-      console.log(JSON.stringify({name: account.name, battlePass}))
-      const res = { replyToken, messages: [{ type: message.type, text: JSON.stringify({name: account.name, battlePass}) }] };
+      console.log(`帳號： ${account.name}\nBattlePass: Lv${battlePass.level} ${battlePass.progress}%
+      `)
+      const res = { replyToken, messages: [{ 
+        type: message.type, 
+        text: `帳號： ${account.name}\nBattlePass: Lv${battlePass.level} ${battlePass.progress}%`
+      }] };
       return APP_ENV === 'local' ? res : reply(res);
     }
     const prompt = this.storage.getPrompt(source.userId);
