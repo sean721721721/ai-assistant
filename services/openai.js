@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
   OPENAI_API_KEY,
   FORTNITE_API_KEY,
+  STEAM_API_KEY,
 } from '../config/index.js';
 
 export const PARTICIPANT_AI = 'AI';
@@ -38,6 +39,7 @@ export const complete = ({
   stop,
 });
 
+/** Fortnite 端點 */
 const fortniteInstance = axios.create({
   baseURL: 'https://fortnite-api.com/v2/stats/br/v2',
   headers: {
@@ -45,6 +47,7 @@ const fortniteInstance = axios.create({
   }
 })
 
+/** Fortnite 取得狀態 */
 export const getStats = (name, option) => fortniteInstance.get('', {params:{name}}).then((res) => {
   const {account, battlePass, stats:{ all: { overall, solo, duo, trio, squad }}} = res.data.data;
   let result = '';
@@ -63,4 +66,12 @@ export const getStats = (name, option) => fortniteInstance.get('', {params:{name
     result = `BattlePass： Lv${battlePass.level} ${battlePass.progress}%\n勝利： ${overall.wins}\n前3名： ${overall.top3}\n前5名： ${overall.top5}\n前6名： ${overall.top6}\n前10名： ${overall.top10}\n前12名： ${overall.top12}\n前25名： ${overall.top25}\n殺敵數： ${overall.kills}\n平均殺敵數(分)： ${overall.killsPerMin}\n平均殺敵數(場)： ${overall.killsPerMatch}\n死亡數： ${overall.deaths}`
   }
   return `[Fortnite] Stats\n帳號： ${account.name}\n`.concat(result);
+})
+
+/** Steam 端點 */
+const steamInstance = axios.create({baseURL:  'http://api.steampowered.com/ISteamUser'})
+
+/** Steam 取得使用者摘要 */
+export const getPlayerSummaries = (steamids) => steamInstance.get(`/GetPlayerSummaries/v0002/?key=${STEAM_API_KEY}&steamids=${steamids}`).then((res) => {
+  return res.response.players[0].steamid;
 })
