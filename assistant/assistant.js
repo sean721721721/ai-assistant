@@ -39,15 +39,16 @@ class Assistant {
     if (!regex.test(message.text)) {
       const game = new RegExp('^fn');
       if (!game.test(message.text)) return null
-      const { data } = await axios({
+      const response = await axios({
         method: 'get',
         url: 'https://fortnite-api.com/v2/stats/br/v2?name=sean721721721',
         headers: {
           Authorization: FORTNITE_API_KEY,
         }
-    })
-    console.log(JSON.stringify(data.battlepass))
-    const res = { replyToken, messages: [{ type: message.type, text: JSON.stringify(data.battlepass) }] };
+      })
+      const {account, battlePass} = response.data.data;
+      console.log(JSON.stringify({name: account.name, battlePass}))
+      const res = { replyToken, messages: [{ type: message.type, text: JSON.stringify({name: account.name, battlePass}) }] };
       return APP_ENV === 'local' ? res : reply(res);
     }
     const prompt = this.storage.getPrompt(source.userId);
