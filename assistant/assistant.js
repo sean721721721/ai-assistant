@@ -42,7 +42,7 @@ class Assistant {
         const mode = ['solo', 'duo', 'trio', 'squad'];
         let selectMode = '';
         if (mode.includes(params[1].split('-')[1])) selectMode = params[1].split('-')[1];
-        responseString = await getStats(params[1], selectMode)
+        responseString = await getStats(params[2], selectMode)
       }
       const res = { replyToken, messages: [{ type: message.type, text: responseString}]};
       return APP_ENV === 'local' ? res : reply(res);
