@@ -35,7 +35,14 @@ class Assistant {
     if (!regex.test(message.text)) {
       const game = new RegExp('^fn');
       if (!game.test(message.text)) return null
-      const { data } = await getData();
+      const { data } = await axios({
+        method: 'get',
+        url: 'https://fortnite-api.com/v2/stats/br/v2?name=sean721721721',
+        headers: {
+          Authorization: FORTNITE_API_KEY,
+        }
+    })
+    console.log(data)
       return APP_ENV === 'local' ? data : reply(data);
     }
     const prompt = this.storage.getPrompt(source.userId);
