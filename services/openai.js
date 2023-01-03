@@ -46,6 +46,6 @@ const fortniteInstance = axios.create({
 })
 
 export const getStats = (name) => fortniteInstance.get('', {params:{name}}).then((res) => {
-  const {account, battlePass, stats:{ all: { overall }}} = response.data.data;
+  const {account, battlePass, stats:{ all: { overall }}} = res.data.data;
   return `[Fortnite] Stats\n帳號： ${account.name}\nBattlePass: Lv${battlePass.level} ${battlePass.progress}%\n勝利: ${overall.wins}\ntop3: ${overall.top3}\ntop5: ${overall.top5}\ntop6: ${overall.top6}\ntop10: ${overall.top10}\ntop12: ${overall.top12}\ntop25: ${overall.top25}\n殺敵數: ${overall.kills}\n平均殺敵數(分): ${overall.killsPerMin}\n平均殺敵數(場): ${overall.killsPerMatch}\n死亡數: ${overall.deaths}`;
 })
