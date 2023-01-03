@@ -46,8 +46,9 @@ class Assistant {
           Authorization: FORTNITE_API_KEY,
         }
     })
-    console.log(data)
-      return APP_ENV === 'local' ? data : reply(data);
+    console.log(JSON.stringify(data.battlepass))
+    const res = { replyToken, messages: [{ type: message.type, text: JSON.stringify(data.battlepass) }] };
+      return APP_ENV === 'local' ? res : reply(res);
     }
     const prompt = this.storage.getPrompt(source.userId);
     prompt.write(`${PARTICIPANT_HUMAN}: ${message.text.replace('小白', '')}？`);
