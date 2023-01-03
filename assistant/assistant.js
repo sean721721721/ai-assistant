@@ -39,7 +39,7 @@ class Assistant {
     if (!regex.test(message.text)) {
       const game = new RegExp('^fortnite');
       if (!game.test(message.text)) return null
-      const params = a.split(' ')
+      const params = message.text.split(' ')
       const response = await axios({
         method: 'get',
         url: `https://fortnite-api.com/v2/${params[2]}/br/v2?name=${params[1]}`,
