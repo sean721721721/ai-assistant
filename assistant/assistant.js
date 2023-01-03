@@ -2,6 +2,9 @@ import {
   APP_ENV,
   APP_DEBUG,
 } from '../config/index.js';
+import {
+  FORTNITE_API_KEY,
+} from '../config/index.js';
 import axios from 'axios';
 import {
   PARTICIPANT_AI,
