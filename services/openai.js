@@ -39,7 +39,7 @@ export const complete = ({
 });
 
 const fortniteInstance = axios.create({
-  baseURL: 'https://fortnite-api.com/v2/stats/br/v2?name=sean721721721',
+  baseURL: 'https://fortnite-api.com/v2/stats/br/v2',
   headers: {
     Authorization: FORTNITE_API_KEY,
   }
