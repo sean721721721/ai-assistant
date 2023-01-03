@@ -54,11 +54,11 @@ class Assistant {
         const res = { replyToken, messages: [{ type: message.type, text: responseString}]};
         return APP_ENV === 'local' ? res : reply(res);
       } else if  (imageKeyword.test(message.text)) {
-        return APP_ENV === 'local' ? res : reply({ replyToken, messages: {
+        return APP_ENV === 'local' ? res : reply({ replyToken, messages: [{
           type: "image",
           originalContentUrl: "https://i.imgur.com/KvcaQPu.jpeg",
           previewImageUrl: "https://i.imgur.com/KvcaQPu.jpeg"
-        }});
+        }]});
       }
       return null;
     }
