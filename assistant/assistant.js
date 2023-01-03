@@ -36,7 +36,7 @@ class Assistant {
       const game = new RegExp('^fn');
       if (!game.test(message.text)) return null
       const { data } = await getData();
-      return APP_ENV === 'local' ? res : reply(res);
+      return APP_ENV === 'local' ? data : reply(data);
     }
     const prompt = this.storage.getPrompt(source.userId);
     prompt.write(`${PARTICIPANT_HUMAN}: ${message.text.replace('小白', '')}？`);
