@@ -73,5 +73,6 @@ const steamInstance = axios.create({baseURL:  'http://api.steampowered.com/IStea
 
 /** Steam 取得使用者摘要 */
 export const getPlayerSummaries = (steamids) => steamInstance.get(`/GetPlayerSummaries/v0002/?key=${STEAM_API_KEY}&steamids=${steamids}`).then((res) => {
+  console.log('🚀 , file: openai.js:77 , getPlayerSummaries , res', res);
   return res.response.players[0].steamid;
 })
