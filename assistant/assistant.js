@@ -53,6 +53,7 @@ class Assistant {
         const res = { replyToken, messages: [{ type: message.type, text: responseString}]};
         return APP_ENV === 'local' ? res : reply(res);
       }
+      return null;
     }
     const prompt = this.storage.getPrompt(source.userId);
     prompt.write(`${PARTICIPANT_HUMAN}: ${message.text.replace('小白', '')}？`);
