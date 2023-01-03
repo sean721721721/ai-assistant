@@ -36,6 +36,7 @@ class Assistant {
     if (!regex.test(message.text)) {
       const fortniteKeyword = new RegExp('^\\[FN\\]');
       const steamKeyword = new RegExp('^\\[ST\\]');
+      const imageKeyword = new RegExp('^\\[IM\\]')
       if (fortniteKeyword.test(message.text)) {
         const params = message.text.split(',')
         let responseString = '';
@@ -52,6 +53,12 @@ class Assistant {
         if (params[1].includes('summary')) responseString = await getPlayerSummaries(params[2])
         const res = { replyToken, messages: [{ type: message.type, text: responseString}]};
         return APP_ENV === 'local' ? res : reply(res);
+      } else if  (imageKeyword.test(message.text)) {
+        return APP_ENV === 'local' ? res : reply({
+          type: "image",
+          originalContentUrl: "https://i.imgur.com/KvcaQPu.jpeg",
+          previewImageUrl: "https://i.imgur.com/KvcaQPu.jpeg"
+        });
       }
       return null;
     }
