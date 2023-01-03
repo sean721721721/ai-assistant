@@ -37,7 +37,7 @@ class Assistant {
     if (message.type !== MESSAGE_TYPE_TEXT) return null;
     const regex = new RegExp('^小白');
     if (!regex.test(message.text)) {
-      const game = new RegExp('^[FN]');
+      const game = new RegExp('^\\[FN\\]');
       if (!game.test(message.text)) return null
       const params = message.text.split(',')
       const response = await axios({
