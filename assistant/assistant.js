@@ -3,15 +3,11 @@ import {
   APP_DEBUG,
 } from '../config/index.js';
 import {
-  FORTNITE_API_KEY,
-} from '../config/index.js';
-import axios from 'axios';
-import {
   PARTICIPANT_AI,
   PARTICIPANT_HUMAN,
   FINISH_REASON_STOP,
   complete,
-  getData,
+  getStats,
 } from '../services/openai.js';
 import {
   EVENT_TYPE_MESSAGE,
@@ -40,30 +36,9 @@ class Assistant {
       const game = new RegExp('^\\[FN\\]');
       if (!game.test(message.text)) return null
       const params = message.text.split(',')
-      const response = await axios({
-        method: 'get',
-        url: `https://fortnite-api.com/v2/${params[1]}/br/v2?name=${params[2]}`,
-        headers: {
-          Authorization: FORTNITE_API_KEY,
-        }
-      })
-      const {account, battlePass, stats:{ all: { overall }}} = response.data.data;
-      const res = { replyToken, messages: [{ 
-        type: message.type, 
-        text: `[Fortnite] Stats
-帳號： ${account.name}
-BattlePass: Lv${battlePass.level} ${battlePass.progress}%
-勝利: ${overall.wins}
-top3: ${overall.top3}
-top5: ${overall.top5}
-top6: ${overall.top6}
-top10: ${overall.top10}
-top12: ${overall.top12}
-top25: ${overall.top25}
-殺敵數: ${overall.kills}
-平均殺敵數(分): ${overall.killsPerMin}
-平均殺敵數(場): ${overall.killsPerMatch}
-死亡數: ${overall.deaths}`}]};
+      let responseString = '';
+      if (params[1] === 'stats') responseString = await getStats(params[1])
+      const res = { replyToken, messages: [{ type: message.type, text: responseString}]};
       return APP_ENV === 'local' ? res : reply(res);
     }
     const prompt = this.storage.getPrompt(source.userId);
