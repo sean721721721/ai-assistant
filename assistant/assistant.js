@@ -50,11 +50,7 @@ class Assistant {
       const {account, battlePass} = response.data.data;
       const res = { replyToken, messages: [{ 
         type: message.type, 
-        text: `[Fortnite] 
-          Stats
-            帳號： ${account.name}
-            BattlePass: Lv${battlePass.level} ${battlePass.progress}%
-        `
+        text: `[Fortnite] Stats\n帳號： ${account.name}\nBattlePass: Lv${battlePass.level} ${battlePass.progress}%`
       }] };
       return APP_ENV === 'local' ? res : reply(res);
     }
