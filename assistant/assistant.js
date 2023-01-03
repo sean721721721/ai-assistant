@@ -50,8 +50,7 @@ class Assistant {
       const {account, battlePass} = response.data.data;
       const res = { replyToken, messages: [{ 
         type: message.type, 
-        text: `
-        [Fortnite] 
+        text: `[Fortnite] 
           Stats
             帳號： ${account.name}
             BattlePass: Lv${battlePass.level} ${battlePass.progress}%
